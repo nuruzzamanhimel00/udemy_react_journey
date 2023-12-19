@@ -1,12 +1,15 @@
 import './ExpenseItems.css';
 const ExpenseItems = () => {
+    const dateSting = new Date('2022-02-02').toLocaleDateString('en-US');
+    const titleString = "Car test";
+    const amountString = 202.02;
     return (
         <div className='card'> 
             <div className="expenseitem_main">
-                <div>March 28, 2023</div>
+                <div>{dateSting}</div>
                 <div className='expenseitem_description'>
-                    <div>Car test</div>
-                    <div className='price'>$202.02</div>
+                    <div>{titleString}</div>
+                    <div className='price'>${amountString}</div>
                 </div>
             </div>
         </div>
