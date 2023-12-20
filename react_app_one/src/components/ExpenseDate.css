@@ -1,0 +1,8 @@
+.expenseitem_main .expenseitem_date{
+    background-image: initial;
+    background-color: rgb(204, 0, 0);
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid #fff !important;
+    padding:5px;
+}
