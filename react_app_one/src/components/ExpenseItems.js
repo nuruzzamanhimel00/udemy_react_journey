@@ -1,8 +1,8 @@
 import './ExpenseItems.css';
-const ExpenseItems = () => {
-    const dateSting = new Date('2022-02-02').toLocaleDateString('en-US');
-    const titleString = "Car test";
-    const amountString = 202.02;
+const ExpenseItems = (props) => {
+    const dateSting = props.date.toLocaleDateString('en-US');
+    const titleString = props.title;
+    const amountString = props.amount;
     return (
         <div className='card'> 
             <div className="expenseitem_main">
