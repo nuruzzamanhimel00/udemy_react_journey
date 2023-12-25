@@ -1,12 +1,14 @@
+import React, {useState} from 'react';
 import './ExpenseItems.css';
 import ExpenseDate from './ExpenseDate.js'
 import Card from '../UI/Card.js'
 const ExpenseItems = (props) => {
-
-    const titleString = props.title;
+    const [titleString, setTitleString] = useState(props.title);
+    // const titleString = props.title;
     const amountString = props.amount;
 
     const testClickHandler = () =>{
+        setTitleString('updated title- '+Math.random());
         console.log('clicked');
     }
     return (
