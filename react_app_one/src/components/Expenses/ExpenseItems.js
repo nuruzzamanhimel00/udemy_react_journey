@@ -5,6 +5,10 @@ const ExpenseItems = (props) => {
 
     const titleString = props.title;
     const amountString = props.amount;
+
+    const testClickHandler = () =>{
+        console.log('clicked');
+    }
     return (
         <div className='main'> 
             <Card className="card">
@@ -19,6 +23,9 @@ const ExpenseItems = (props) => {
                     <div className='expenseitem_description'>
                         <div>{titleString}</div>
                         <div className='price'>${amountString}</div>
+                        <div>
+                            <a href="#" onClick={testClickHandler} >CLick me</a>
+                        </div>
                     </div>
                 </div>
             </Card>
