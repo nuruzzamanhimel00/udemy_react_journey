@@ -12,10 +12,14 @@ const ExpenseItems = (props) => {
         setTitleString('updated title- '+Math.random());
         console.log('clicked');
     }
+    const newExpenseHandler = (data)=>{
+        props.onExpense(data);
+        // console.log('data',data);
+    }
     return (
         <div className='main'> 
             <Card className="card">
-                <NewExpense />
+                <NewExpense newExpenseHandler={newExpenseHandler} />
                 <div className="expenseitem_main">
                     {/* <div>{dateSting}</div> */}
                     <ExpenseDate date={props.date} />
