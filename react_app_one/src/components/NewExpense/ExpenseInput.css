@@ -1,0 +1,11 @@
+.expenseInputForm{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.expenseInputForm div{
+    width: 45%;
+    margin: 10px 0px;
+    padding: 3px 14px;
+}
