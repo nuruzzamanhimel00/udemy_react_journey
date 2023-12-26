@@ -1,0 +1,4 @@
+.expenseitem_date{
+    display: flex;
+    justify-content: space-between;
+}
