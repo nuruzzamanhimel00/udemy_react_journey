@@ -15,20 +15,32 @@ const ExpenseItems = (props) => {
         props.onExpenseYearHandler(year);
         // console.log(year)
     }
+    let expense_list_data = '<p> NO data found !! </p>'
+    if(props.items.length > 0){
+        expense_list_data =  props.items.map((item)=>(
+            <ExpenseList 
+            key={item.id}
+            title={item.title} 
+            amount={item.amount} 
+            date={item.date} 
+            />
+        ))
+    }
     return (
         <div className='main'> 
             <Card className="card">
                 <NewExpense newExpenseHandler={newExpenseHandler} />
                 <ExpenseFilter onExpenseYearHandler={expenseYearItemHandler} />
                 {
-                        props.items.map((item)=>(
-                            <ExpenseList 
-                            key={item.id}
-                            title={item.title} 
-                            amount={item.amount} 
-                            date={item.date} 
-                            />
-                        ))
+                    expense_list_data
+                        // props.items.map((item)=>(
+                        //     <ExpenseList 
+                        //     key={item.id}
+                        //     title={item.title} 
+                        //     amount={item.amount} 
+                        //     date={item.date} 
+                        //     />
+                        // ))
                     }
                 {/* <div className="expenseitem_main">
                

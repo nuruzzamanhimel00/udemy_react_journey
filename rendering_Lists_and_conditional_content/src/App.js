@@ -33,36 +33,35 @@ function App() {
 
   const [items, setItems] = useState(expensee_data)
   const [itemsTemp, setItemsTemp] = useState(expensee_data)
+  const [expenseFilterYear, setExpenseFilterYear] = useState(2023)
   const expHandler = (expense) =>{
     // expensee_data.push(expense);
     setItems((prev)=>{
       return [expense,...prev]
     })
-    console.log('expHandler',expense);
+    expend_item_list_filter(expenseFilterYear, [expense,...items])
+    // console.log('expHandler',expense);
   }
   const exYearHandler = (year)=>{
-    let newExptData = [];
-    items.forEach((item)=>{
-      let yearSting = item.date.toLocaleDateString('en-US',{year: 'numeric',});
-      if(yearSting === year){
-        newExptData.push(item)
-      }
-    })
-    if(newExptData.length > 0){
-
-      setItemsTemp([...newExptData])
-    }else{
-      setItemsTemp([])
+    setExpenseFilterYear(year)
+    expend_item_list_filter(year, items)
+   
+}
+const expend_item_list_filter  = (year, items_data) =>{
+  console.log(items_data);
+  let newExptData = [];
+  items_data.forEach((item)=>{
+    let yearSting = item.date.toLocaleDateString('en-US',{year: 'numeric',});
+    if(yearSting === year){
+      newExptData.push(item)
     }
-    // setItemsTemp((prev)=>{
-    //   if(newExptData.length > 0){
+  })
+  if(newExptData.length > 0){
 
-    //     return [...newExptData]
-    //   }else{
-    //     return [];
-    //   }
-    // })
-    console.log('exYearHandler',year)
+    setItemsTemp([...newExptData])
+  }else{
+    setItemsTemp([])
+  }
 }
   return (
     <div>

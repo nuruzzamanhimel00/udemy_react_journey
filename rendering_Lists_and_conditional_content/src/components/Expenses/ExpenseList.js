@@ -4,10 +4,10 @@ const ExpenseList = (props) =>{
     const [titleString, setTitleString] = useState(props.title);
     // const titleString = props.title;
     const amountString = props.amount;
-    const testClickHandler = () =>{
-        setTitleString('updated title- '+Math.random());
-        console.log('clicked');
-    }
+    // const testClickHandler = () =>{
+    //     setTitleString('updated title- '+Math.random());
+    //     console.log('clicked');
+    // }
     return (
         <div className="expenseitem_main">
                
