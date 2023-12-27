@@ -35,7 +35,7 @@ function App() {
   const expHandler = (expense) =>{
     // expensee_data.push(expense);
     setItems((prev)=>{
-      return [...prev,expense]
+      return [expense,...prev]
     })
     console.log('expHandler',expense);
   }

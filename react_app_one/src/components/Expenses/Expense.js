@@ -7,13 +7,17 @@ const Expense = (props) =>{
     }
     return (
         <>
-         
+        
         <ExpenseItems
+        onExpense={expenseHandler}
+        items={props.items}
+        />
+        {/* <ExpenseItems
         onExpense={expenseHandler}
         title={props.items[0].title} 
         amount={props.items[0].amount} 
         date={props.items[0].date} 
-        />
+        /> */}
         </>
        
     )
