@@ -20,13 +20,13 @@ const expensee_data = [
     id:'e3',
     title:'Car3',
     amount: 2023.02,
-    date: new Date('2022-02-02')
+    date: new Date('2022-04-02')
   },
   {
     id:'e14',
     title:'Car4',
     amount: 2024.402,
-    date: new Date('2022-02-02')
+    date: new Date('2022-03-02')
   },
 ];
 function App() {

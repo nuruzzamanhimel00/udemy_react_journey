@@ -1,0 +1,7 @@
+.exp_chart_main .exp_chart_item div:first-child .bg{
+    background-image: initial;
+    background-color: rgb(204, 0, 0);
+    height: 0%;
+    width: 100%;
+ 
+}

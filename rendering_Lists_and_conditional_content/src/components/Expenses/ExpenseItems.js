@@ -5,6 +5,7 @@ import Card from '../UI/Card.js'
 import NewExpense from '../NewExpense/NewExpense.js'
 import ExpenseFilter from './ExpenseFilter.js';
 import ExpenseList from './ExpenseList.js';
+import ExpenseChart from './ExpenseChart.js';
 const ExpenseItems = (props) => {
 
     const newExpenseHandler = (data)=>{
@@ -30,32 +31,13 @@ const ExpenseItems = (props) => {
         <div className='main'> 
             <Card className="card">
                 <NewExpense newExpenseHandler={newExpenseHandler} />
+                <ExpenseChart expenses={props.items} />
                 <ExpenseFilter onExpenseYearHandler={expenseYearItemHandler} />
                 {
                     expense_list_data
-                        // props.items.map((item)=>(
-                        //     <ExpenseList 
-                        //     key={item.id}
-                        //     title={item.title} 
-                        //     amount={item.amount} 
-                        //     date={item.date} 
-                        //     />
-                        // ))
+                      
                     }
-                {/* <div className="expenseitem_main">
-               
-                  
-                    <ExpenseDate date={props.date} />
-                  
                 
-                    <div className='expenseitem_description'>
-                        <div>{titleString}</div>
-                        <div className='price'>${amountString}</div>
-                        <div>
-                            <a href="#" onClick={testClickHandler} >CLick me</a>
-                        </div>
-                    </div>
-                </div> */}
             </Card>
         </div>
     );
