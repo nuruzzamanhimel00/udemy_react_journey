@@ -49,6 +49,10 @@ const ExpenseInput = (props)=>{
         setInputData({title: '', amount: '', date: ''})
         // console.log(expenseData)
     }
+    const closeExpenseHandler = (e)=>{
+        e.preventDefault();
+        props.onAddExpFlug(false)
+    }
     return (
         <form className="expenseInputForm" onSubmit={submitFormHandler}> 
                 <div>
@@ -72,6 +76,7 @@ const ExpenseInput = (props)=>{
                </div>
                <div> 
                <button>Add Expense</button>
+               <button style={{marginLeft: '10px'}} onClick={closeExpenseHandler}>Close Expense</button>
                </div>
             </form>
     );
