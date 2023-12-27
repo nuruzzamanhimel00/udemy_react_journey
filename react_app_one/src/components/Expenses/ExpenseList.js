@@ -18,9 +18,9 @@ const ExpenseList = (props) =>{
         <div className='expenseitem_description'>
             <div>{titleString}</div>
             <div className='price'>${amountString}</div>
-            <div>
+            {/* <div>
                 <a href="#" onClick={testClickHandler} >CLick me</a>
-            </div>
+            </div> */}
         </div>
     </div>
     );
