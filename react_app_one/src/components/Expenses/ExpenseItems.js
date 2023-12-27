@@ -6,23 +6,20 @@ import NewExpense from '../NewExpense/NewExpense.js'
 import ExpenseFilter from './ExpenseFilter.js';
 import ExpenseList from './ExpenseList.js';
 const ExpenseItems = (props) => {
-    // const [titleString, setTitleString] = useState(props.title);
-    // // const titleString = props.title;
-    // const amountString = props.amount;
 
-    // const testClickHandler = () =>{
-    //     setTitleString('updated title- '+Math.random());
-    //     console.log('clicked');
-    // }
     const newExpenseHandler = (data)=>{
         props.onExpense(data);
         // console.log('data',data);
+    }
+    const expenseYearItemHandler = (year)=>{
+        props.onExpenseYearHandler(year);
+        // console.log(year)
     }
     return (
         <div className='main'> 
             <Card className="card">
                 <NewExpense newExpenseHandler={newExpenseHandler} />
-                <ExpenseFilter />
+                <ExpenseFilter onExpenseYearHandler={expenseYearItemHandler} />
                 {
                         props.items.map((item)=>(
                             <ExpenseList 

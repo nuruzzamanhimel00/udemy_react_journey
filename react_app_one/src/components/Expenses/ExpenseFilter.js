@@ -1,6 +1,11 @@
 
 import './ExpenseFilter.css'
 const ExpenseFilter = (props) =>{
+
+    const expneseFilterHandler = (event) =>{
+        props.onExpenseYearHandler(event.target.value);
+        // console.log(event.target.value);
+    }
     return (
         <>
         <div className='expenseitem_date'> 
@@ -8,7 +13,7 @@ const ExpenseFilter = (props) =>{
                 <h3>Select Years:</h3>
             </div>
             <div>
-            <select name="cars">
+            <select name="cars" onChange={expneseFilterHandler}>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>

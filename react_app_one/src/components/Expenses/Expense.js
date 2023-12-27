@@ -5,19 +5,19 @@ const Expense = (props) =>{
         props.onExpHandler(expense);
         // console.log('expense handler',expense)
     }
+    const expenseYearHandler = (year)=>{
+        props.onExYearHandler(year)
+        // console.log('expenseYearHandler',year)
+    }
     return (
         <>
         
         <ExpenseItems
+        onExpenseYearHandler={expenseYearHandler}
         onExpense={expenseHandler}
         items={props.items}
         />
-        {/* <ExpenseItems
-        onExpense={expenseHandler}
-        title={props.items[0].title} 
-        amount={props.items[0].amount} 
-        date={props.items[0].date} 
-        /> */}
+     
         </>
        
     )

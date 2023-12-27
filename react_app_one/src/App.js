@@ -32,6 +32,7 @@ const expensee_data = [
 function App() {
 
   const [items, setItems] = useState(expensee_data)
+  const [itemsTemp, setItemsTemp] = useState(expensee_data)
   const expHandler = (expense) =>{
     // expensee_data.push(expense);
     setItems((prev)=>{
@@ -39,15 +40,35 @@ function App() {
     })
     console.log('expHandler',expense);
   }
+  const exYearHandler = (year)=>{
+    let newExptData = [];
+    items.forEach((item)=>{
+      let yearSting = item.date.toLocaleDateString('en-US',{year: 'numeric',});
+      if(yearSting === year){
+        newExptData.push(item)
+      }
+    })
+    if(newExptData.length > 0){
+
+      setItemsTemp([...newExptData])
+    }else{
+      setItemsTemp([])
+    }
+    // setItemsTemp((prev)=>{
+    //   if(newExptData.length > 0){
+
+    //     return [...newExptData]
+    //   }else{
+    //     return [];
+    //   }
+    // })
+    console.log('exYearHandler',year)
+}
   return (
     <div>
       <h1>Hello world !!</h1>
-      <Expense items={items} onExpHandler={expHandler} />
-      {/* <ExpenseItems
-      title={expensee_data[0].title} 
-      amount={expensee_data[0].amount} 
-      date={expensee_data[0].date} 
-      /> */}
+      <Expense items={itemsTemp} onExpHandler={expHandler} onExYearHandler={exYearHandler} />
+     
     </div>
   );
 }
