@@ -10,13 +10,18 @@ const User = () => {
     setUserList((prevData) => [data, ...prevData]);
     // console.log(data);
   };
+  const onDeleteHandler = (id) => {
+    let user_list = userList.filter((user) => user.id !== id);
+    setUserList(user_list);
+    // console.log("id main", id);
+  };
   return (
     <>
       <div className={style["main-section"]}>
         <div className={style.main_section_inner}>
           <UserForm onGetUserList={getUserListHandler} />
           {/* user list */}
-          <UserList userList={userList} />
+          <UserList userList={userList} onDelete={onDeleteHandler} />
         </div>
       </div>
     </>

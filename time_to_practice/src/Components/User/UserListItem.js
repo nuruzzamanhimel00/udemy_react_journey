@@ -2,6 +2,9 @@ import React from "react";
 import style from "./UserListItem.module.css";
 
 const UserListItem = (props) => {
+  const deleteUserlistHandler = () => {
+    props.onDelete(props.user.id);
+  };
   return (
     <>
       <li>
@@ -10,7 +13,7 @@ const UserListItem = (props) => {
             {props.user.name} (Age: {props.user.age}){" "}
           </div>
           <div>
-            <button>Delete</button>
+            <button onClick={deleteUserlistHandler}>Delete</button>
           </div>
         </div>
       </li>

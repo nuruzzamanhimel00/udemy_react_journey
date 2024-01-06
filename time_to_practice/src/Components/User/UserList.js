@@ -4,6 +4,10 @@ import style from "./UserList.module.css";
 import UserListItem from "./UserListItem.js";
 
 const UserList = (props) => {
+  const onDeleteHandler = (id) => {
+    props.onDelete(id);
+    // console.log("id", id);
+  };
   let listContent = (
     <li>
       <p> Data not found</p>
@@ -11,7 +15,7 @@ const UserList = (props) => {
   );
   if (props.userList.length > 0) {
     listContent = props.userList.map((user) => (
-      <UserListItem key={user.id} user={user} />
+      <UserListItem key={user.id} user={user} onDelete={onDeleteHandler} />
     ));
   }
 

@@ -8,6 +8,10 @@ const UserForm = (props) => {
     name: "",
     age: "",
   });
+  const [isValid, setIsValid] = useState({
+    isValid: true,
+    message: "",
+  });
   const nameChangeHandler = (e) => {
     setInputData((prevState) => {
       return {
@@ -33,13 +37,31 @@ const UserForm = (props) => {
       inputData.name.trim().length === 0 ||
       inputData.age.trim().length === 0
     ) {
-      alert("All field is required");
+      setIsValid((prevData) => {
+        return {
+          ...prevData,
+          isValid: false,
+          message: "All field is required",
+        };
+      });
+      // alert("All field is required");
       return;
     }
     if (inputData.age.trim() < 1) {
-      alert("Age cannot be negative (<1)");
+      setIsValid((prevData) => {
+        return {
+          ...prevData,
+          isValid: false,
+          message: "Age cannot be negative (<1)",
+        };
+      });
+      // alert("Age cannot be negative (<1)");
       return;
     }
+    setIsValid({
+      isValid: true,
+      message: "",
+    });
     props.onGetUserList({
       id: Math.random(),
       ...inputData,
@@ -50,6 +72,7 @@ const UserForm = (props) => {
     });
     // console.log(inputData);
   };
+
   return (
     <>
       <div className={style["user-section"]}>
@@ -81,6 +104,22 @@ const UserForm = (props) => {
             </form>
           </div>
         </Card>
+      </div>
+
+      <div
+        id="myModal"
+        className={style.modal}
+        style={{ display: isValid.isValid ? "none" : "block" }}
+      >
+        <div className={style["modal-content"]}>
+          <span
+            className={style.close}
+            onClick={() => setIsValid({ isValid: true })}
+          >
+            &times;
+          </span>
+          <p>{isValid.message}</p>
+        </div>
       </div>
     </>
   );
