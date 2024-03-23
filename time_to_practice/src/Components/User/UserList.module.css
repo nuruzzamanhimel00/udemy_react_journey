@@ -1,0 +1,15 @@
+.user-list {
+}
+.user-list ol {
+  text-decoration: none;
+  list-style: none;
+  margin: 0;
+  padding-left: 8px;
+}
+.user-list ol li {
+  padding: 5px 0px;
+  border-bottom: 1px solid #fff;
+}
+.user-list ol li:last-child {
+  border-bottom: none;
+}
