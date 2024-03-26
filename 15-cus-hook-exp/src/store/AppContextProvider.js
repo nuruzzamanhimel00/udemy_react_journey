@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback} from "react";
+import React, { useEffect, useState} from "react";
 
 import AppContext from './app-context.js';
 
@@ -6,8 +6,9 @@ import AppContext from './app-context.js';
 const AppContextProvider = (props) => {
 
     const [allTasks, setAllTasks] = useState([]);
-    const fetchTasks = useCallback(async () => {
-        props.isLoading(true)
+    const fetchTasks = async () => {
+      props.isLoading(true)
+  
         try {
           const response = await fetch("http://127.0.0.1:8000/api/get-all-post");
           // console.log(response);
@@ -26,14 +27,16 @@ const AppContextProvider = (props) => {
             props.isLoading(false)
           console.log("An error occurred:", error.message);
         } finally {
-          // Optional finally block
-          // Code here will always execute regardless of whether an error occurred or not
+          
         }
     
-      },[])
+    }
+  
+
+  
     useEffect(() => { 
         fetchTasks()
-    }, [fetchTasks])
+    }, [])
     
     const addTaskHandler = (task) => {
         setAllTasks((prevTasks) => [task, ...prevTasks]);
