@@ -1,40 +1,51 @@
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 
-const useHttp = (configData, applyData) => {
+const useHttp = () => {
     
-    const submitTaskHandler = async (event) => {
-        event.preventDefault();
-        // appCtx.isLoading(true)
-        try {
-            const response = await fetch(
-                configData.url,
-                {
-                method: configData.hasOwnProperty('method') &&configData.method != null  ? configData.method : 'GET',
-                body: configData.hasOwnProperty('body') && configData.body != null  ? JSON.stringify(configData.body) : null,
-                headers: configData.hasOwnProperty('headers') &&configData.headers != null ? configData.headers : {
-                    'Content-Type': 'application/json',
-                  },
-                }
-            );
+  // const [allTasks, setAllTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const sendRequest = useCallback(async (requestConfig, applyData) => {
+    // props.isLoading(true)
+    setIsLoading(true)
+    setError(null)
+      try {
+        const response = await fetch(requestConfig.url, {
+          method: requestConfig.method ? requestConfig.method : 'GET',
+          headers: requestConfig.headers ? requestConfig.headers : {},
+          body: requestConfig.body ? JSON.stringify(requestConfig.body) : null
+        });
+        // console.log(response);
+        if (response.status !== 200) {
+          throw new Error("Something is wrong");
+        }
+        const data = await response.json();
+        
+  
+        // props.isLoading(false)
+        setIsLoading(false)
+        setError(null)
+        applyData(data)
       
-            if (!response.ok) {
-              throw new Error('Request failed!');
-            }
-            
+  
+      } catch (error) {
+
+          // Code to handle the error
+        // props.isLoading(false)
+        setIsLoading(false)
+        setError(error.message ?? 'Something is worng !!');
+        console.log("An error occurred:", error.message);
+      } finally {
         
-            const data = await response.json();
-            applyData(data)
-            // console.log('data', data)
-            // task_title.current.value = ''
-            // appCtx.addTask(data.data)
-            // appCtx.isLoading(false)
-        } catch (err) {
-            // appCtx.isLoading(false)
-            // setError(err.message || 'Something went wrong!');
-          }
-        
-        // console.log(task_title.current.value);
-    }
+      }
+  },[])
+
+  return {
+    isLoading,
+    error,
+    sendRequest
+  }
+
     
     
 }

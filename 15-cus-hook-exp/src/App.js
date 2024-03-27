@@ -5,12 +5,17 @@ import AppContextProvider from './store/AppContextProvider.js'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
   const isLoadingCheckHandler = (bool) => {
     setIsLoading(bool)
   }
 
+  const errorHandler = (msg) => {
+    setError(msg)
+  }
+
   return (
-    <AppContextProvider isLoading={ isLoadingCheckHandler}>
+    <AppContextProvider isLoading={ isLoadingCheckHandler} errorMessage={errorHandler}>
       <div className="App">
         <div className="row justify-content-center my-3">
           <NewTask />
@@ -19,6 +24,7 @@ function App() {
         <div className='row justify-content-center'>
         <div className='col-md-6'>
           {isLoading && <h1>Loading....</h1>}
+            {error != null && <h1>{ error}</h1>}
           </div>
         </div>
         
