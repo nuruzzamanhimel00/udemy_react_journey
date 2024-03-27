@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback} from "react";
+import React, { useEffect, useState} from "react";
 
 import AppContext from './app-context.js';
 import useHttp from "../hooks/use-http.js";
@@ -14,9 +14,9 @@ const AppContextProvider = (props) => {
 
   // const { isLoading, error, sendRequest: fetchTasks } = useHttp( transformTask)
   const { isLoading, error, sendRequest: fetchTasks } = useHttp( )
-  
-  props.isLoading(isLoading)
-  props.errorMessage(error)
+//   console.log(isLoading, error)
+//   props.isLoading(isLoading)
+//   props.errorMessage(error)
 
   // const fetchTasks = async () => {
   //     props.isLoading(true)
