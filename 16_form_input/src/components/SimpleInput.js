@@ -1,46 +1,24 @@
-import React, {useState, useEffect} from 'react'
-
+import React from 'react'
+import useInput from   '../hook/user-input';
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredNameIsTuch, setEnteredNameIsTuch] = useState(false);
-  const [formIsValide, setFormIsValide] = useState(true);
 
-  const enterNameIsValied = enteredName === '' && enteredNameIsTuch;
+  const { value: enteredName,  setIsTuch,  enterNameIsValied, enterNameInputHandler, enterNameBlurHandlr, formIsValide, reset: resetValue } = useInput();
 
-  useEffect(() => {
-    if (enteredName === '') {
-      setFormIsValide(false)
-    } else {
-      setFormIsValide(true)
-    }
-  }, [enteredName])
-
-  const enterNameInputHandler = (event) => {
-    setEnteredNameIsTuch(true)
-    if(event.target.value.trim() === '') {
-      setEnteredName('');
-      return;
-    }
-    setEnteredName(event.target.value);
   
-    
-  }
-  const enterNameBlurHandlr = (event) => {
-    setEnteredNameIsTuch(true);
-  }
 
   const submitHandler = (event) => {
     event.preventDefault();
-    // console.log(enterNameIsValied, enteredName === '' , enteredName === null );
+    
     if (enteredName === '') {
       console.log('if')
 
-      setEnteredNameIsTuch(true)
+      setIsTuch(true)
       return; 
     }
-    setEnteredNameIsTuch(false)
-    setEnteredName('');
-    // console.log(enteredName);
+    resetValue();
+    // setEnteredNameIsTuch(false)
+    // setEnteredName('');
+  
   }
   return (
     <form onSubmit={submitHandler}>
@@ -62,8 +40,8 @@ const SimpleInput = (props) => {
         {enterNameIsValied && <p style={{color: 'red'}} >Name field cannot be empty</p> }
       </div>
       <div className="form-actions">
-        <button disabled={!formIsValide}
-        className={!formIsValide ? 'disable-btn' : ''}
+        <button disabled={enterNameIsValied}
+        className={enterNameIsValied ? 'disable-btn' : ''}
         >Submit</button>
       </div>
     </form>
