@@ -1,12 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
   const [enteredNameIsTuch, setEnteredNameIsTuch] = useState(false);
-
+  const [formIsValide, setFormIsValide] = useState(true);
 
   const enterNameIsValied = enteredName === '' && enteredNameIsTuch;
-  
+
+  useEffect(() => {
+    if (enteredName === '') {
+      setFormIsValide(false)
+    } else {
+      setFormIsValide(true)
+    }
+  }, [enteredName])
 
   const enterNameInputHandler = (event) => {
     setEnteredNameIsTuch(true)
@@ -55,7 +62,9 @@ const SimpleInput = (props) => {
         {enterNameIsValied && <p style={{color: 'red'}} >Name field cannot be empty</p> }
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValide}
+        className={!formIsValide ? 'disable-btn' : ''}
+        >Submit</button>
       </div>
     </form>
   );
