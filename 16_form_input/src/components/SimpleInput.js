@@ -2,27 +2,38 @@ import React, {useState} from 'react'
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState('');
-  const [nameIsValidate, setNameIsValidate]= useState(true)
+  const [enteredNameIsTuch, setEnteredNameIsTuch] = useState(false);
 
-  const enterNameChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-    if (event.target.value.trim().length === 0) {
-      setNameIsValidate(false);
-      return; 
+
+  const enterNameIsValied = enteredName === '' && enteredNameIsTuch;
+  
+
+  const enterNameInputHandler = (event) => {
+    setEnteredNameIsTuch(true)
+    if(event.target.value.trim() === '') {
+      setEnteredName('');
+      return;
     }
-    setNameIsValidate(true);
+    setEnteredName(event.target.value);
+  
     
+  }
+  const enterNameBlurHandlr = (event) => {
+    setEnteredNameIsTuch(true);
   }
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (enteredName.trim().length === 0) {
-      setNameIsValidate(false);
+    // console.log(enterNameIsValied, enteredName === '' , enteredName === null );
+    if (enteredName === '') {
+      console.log('if')
+
+      setEnteredNameIsTuch(true)
       return; 
     }
-    setNameIsValidate(true);
+    setEnteredNameIsTuch(false)
     setEnteredName('');
-    console.log(enteredName);
+    // console.log(enteredName);
   }
   return (
     <form onSubmit={submitHandler}>
@@ -30,18 +41,18 @@ const SimpleInput = (props) => {
         <label htmlFor='name'
           style={ 
             {
-              color: nameIsValidate ? 'green' : 'red'
+              color: !enterNameIsValied ? 'green' : 'red'
           }
         }
         >Your Name</label>
         <input type='text' id='name' value={enteredName}
-      
-          onChange={enterNameChangeHandler} style={
+          onBlur={enterNameBlurHandlr}
+          onInput={enterNameInputHandler} style={
           {
-            border: nameIsValidate ? '1px solid green' : '1px solid red'
+            border: !enterNameIsValied ? '1px solid green' : '1px solid red'
           }
         } />
-        {!nameIsValidate && <p style={{color: 'red'}} >Name field cannot be empty</p> }
+        {enterNameIsValied && <p style={{color: 'red'}} >Name field cannot be empty</p> }
       </div>
       <div className="form-actions">
         <button>Submit</button>
