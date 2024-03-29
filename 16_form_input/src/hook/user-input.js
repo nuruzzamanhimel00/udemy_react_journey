@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-const useInput = () => {
+const useInput = (validateValue) => {
     const [enterValue, setEnterValue] = useState('');
     const [isTuch, setIsTuch] = useState(false);
     const [formIsValide, setFormIsValide] = useState(true);
 
-    const enterNameIsValied = enterValue === '' && isTuch;
+    const enterNameIsValied = validateValue(enterValue) && isTuch;
+    // const enterNameIsValied = enterValue === '' && isTuch;
 
     // validateValue(enterValue)
 
