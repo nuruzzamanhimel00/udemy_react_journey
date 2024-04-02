@@ -1,35 +1,66 @@
 
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+const inputReducerFun = (state, action) => {
+    if (action.type === 'inputValue') {
+        return {
+            ...state,
+            inputValue: action.value
+        }
+    }
+    else if (action.type === 'inputTuch') {
+        return {
+            ...state,
+            inputTuch: action.value
+        }
+    } else {
+        return {
+            inputValue: '',
+            inputTuch: false
+        }
+    }
+}
 const useFormInput = (validateData) => {
-    const [enterValue, setEnterValue] = useState('')
-    const [enterIsTuch, setEnterIsTuch] = useState(false)
+    // const [inputValue, setinputValue] = useState('')
+    // const [inputTuch, setEnterIsTuch] = useState(false)
+
+    const [getValue, dispatchGetValue] = useReducer(inputReducerFun, {
+        inputValue: '',
+        inputTuch: false
+     })
   
-    let isValidCheck = validateData(enterValue);
+    let isValidCheck = validateData(getValue.inputValue);
 
-    
+    // console.log('isValidCheck',isValidCheck, getValue.inputTuch, getValue.inputTuch && !isValidCheck )
 
-    if (enterIsTuch && !isValidCheck) {
+    if (getValue.inputTuch && !isValidCheck) {
       isValidCheck = false
     } else {
       isValidCheck = true
     }
-  
-    console.log('isValid',isValidCheck, enterValue, enterIsTuch)
+    // console.log('isValidCheck',isValidCheck)
+    // console.log('isValid',isValidCheck, inputValue, inputTuch)
     const enterInputHandler = (event) => {
-        setEnterValue(event.target.value)
+        dispatchGetValue({
+            type: 'inputValue',
+            value: event.target.value
+        })
     }
     const enterIsTuchHandler = (event) => {
-        setEnterIsTuch(true)
+    
+        dispatchGetValue({
+            type: 'inputTuch',
+            value: true
+        })
     }
     const reset = () => {
-        setEnterValue('')
-        setEnterIsTuch(false)
+        dispatchGetValue({
+            type:''
+        })
     }
+    // console.log('getValue.inputValue',getValue.inputValue)
     return {
-        enterValue,
-        setEnterValue,
-        enterIsTuch,
-        setEnterIsTuch,
+        getValue: getValue.inputValue,
         isValidCheck,
         enterInputHandler,
         enterIsTuchHandler,

@@ -2,7 +2,7 @@ import React from 'react'
 import useFormInput from '../hook/form-input.js'
 const BasicForm = (props) => { 
   const {       
-    enterValue: enterName,
+    getValue: enterName,
     isValidCheck: isValidCheckForName,
     enterInputHandler: enterInputNameHandler,
     enterIsTuchHandler: enterIsTuchNameHandler,
@@ -10,7 +10,7 @@ const BasicForm = (props) => {
   } = useFormInput((value) => value.trim() !== '');
 
   const {       
-    enterValue: enterLastName,
+    getValue: enterLastName,
     isValidCheck: isValidCheckForLastName,
     enterInputHandler: enterInputLastNameHandler,
     enterIsTuchHandler: enterIsTuchLastNameHandler,
@@ -18,16 +18,18 @@ const BasicForm = (props) => {
   } = useFormInput((value) => value.trim() !== '');
 
   const {       
-    enterValue: enterEmail,
+    getValue: enterEmail,
     isValidCheck: isValidCheckForEmail,
     enterInputHandler: enterInputEmailHandler,
     enterIsTuchHandler: enterIsTuchEmailHandler,
     reset: resetEmail
   } = useFormInput((value) => value.trim().includes('@'));
 
+  console.log(isValidCheckForName , isValidCheckForLastName , isValidCheckForEmail)
   const submitHandler = (event) => {
     event.preventDefault();
-    if (!isValidCheckForName || !isValidCheckForLastName || !isValidCheckForEmail) {
+    // console.log(isValidCheckForName , isValidCheckForLastName , isValidCheckForEmail)
+    if (enterLastName === '' || enterLastName === '' || !enterEmail.includes('@')) {
       alert('filed is required!!')
       return;
     }
@@ -58,7 +60,8 @@ const BasicForm = (props) => {
               }
             
             }
-            value={enterName} />
+            value={enterName}
+          />
           {!isValidCheckForName && <p style={{color: 'red'}} >Name field cannot be empty</p>}
         </div>
         <div className='form-control'>
@@ -81,6 +84,7 @@ const BasicForm = (props) => {
             
             }
             value={enterLastName}
+        
           />
             {!isValidCheckForLastName && <p style={{color: 'red'}} >Name field cannot be empty</p>}
         </div>
