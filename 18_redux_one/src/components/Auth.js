@@ -1,11 +1,10 @@
 import classes from './Auth.module.css';
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import {authActions} from '../store/index'
+import {authActions} from '../store/auth'
 
 const Auth = () => {
-  const isAuthonticated = useSelector(state => state.auth.isAuthonticated)
   const dispatch = useDispatch(); 
   const [credential, setCredential] = useState({
     email: '',
@@ -44,9 +43,7 @@ const Auth = () => {
   }
   return (
     <>
-      {
-        !isAuthonticated && 
-        <main className={classes.auth}>
+      <main className={classes.auth}>
           <section>
             <form onSubmit={formSubmitHander}>
               <div className={classes.control}>
@@ -61,7 +58,6 @@ const Auth = () => {
             </form>
           </section>
         </main>
-      }
       
     </>
     
