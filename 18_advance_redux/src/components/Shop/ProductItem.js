@@ -10,7 +10,7 @@ const ProductItem = (props) => {
 
 
 
-  const { title, price, description, id } = props;
+  const { title, price, description, id, post_id } = props;
   const addToCartHandler = async () => {
     let quantity = 1;
     

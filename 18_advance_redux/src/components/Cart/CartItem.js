@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import {cartActions} from '../../store/cart-slice.js'
 
 const CartItem = (props) => {
-  const { name, quantity, totalPrice, price } = props.item;
+  const { name, quantity, totalPrice, price, post_id } = props.item;
   const dispatch = useDispatch();
   const incrementCartHandler = async() => {
 
@@ -17,7 +17,7 @@ const CartItem = (props) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          post_id: props.item.id,
+          post_id: post_id,
           quantity: quantity
         }),
       });
@@ -29,7 +29,7 @@ const CartItem = (props) => {
       if(data.status === 'success') {
       
         dispatch(cartActions.addItemToCart({
-          ...props.item,id:props.item.id,title:props.item.name
+          ...props.item,id:props.item.id,title:props.item.name,post_id:post_id
         }))
       }
     
@@ -55,7 +55,7 @@ const CartItem = (props) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          post_id: props.item.id,
+          post_id: post_id,
           quantity: 1
         }),
       });
