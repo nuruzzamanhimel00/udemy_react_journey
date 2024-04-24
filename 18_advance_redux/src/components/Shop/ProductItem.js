@@ -10,7 +10,42 @@ const ProductItem = (props) => {
 
 
   const { title, price, description } = props;
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
+    // try {
+    //   const response = await fetch("http://127.0.0.1:8000/api/add-to-cart", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //       cart_id: title.current.value,
+    //       description: description.current.value,
+    //     }),
+    //   });
+    //   // console.log(response);
+    //   if (response.status !== 200) {
+    //     throw new Error("Something is wrong");
+    //   }
+    //   const data = await response.json();
+
+    //   data.data.forEach((d) => {
+    //     d.releaseDate = moment(d.created_at).format("MMM Do YY");
+    //     d.openingText = d.description;
+    //     // console.log(d);
+    //   });
+    //   console.log("fetch all moviews", data.data);
+
+    //   setAllMoviewList([...data.data]);
+    //   // setIsLoading(false);
+    //   // console.log(data);
+    // } catch (error) {
+    //   // setError(error.message);
+    //   // Code to handle the error
+    //   console.log("An error occurred:", error.message);
+    // } finally {
+    //   // Optional finally block
+    //   // Code here will always execute regardless of whether an error occurred or not
+    // }
     dispatch(cartActions.addItemToCart({
       ...props
     }))
