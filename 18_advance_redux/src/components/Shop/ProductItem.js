@@ -2,7 +2,8 @@ import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
 //redux
 import { useDispatch } from 'react-redux'
-import {cartActions} from '../../store/cart-slice.js'
+import { cartActions } from '../../store/cart-slice.js'
+import { uiActions } from '../../store/ui-slice.js'
 
 const ProductItem = (props) => {
   const dispatch = useDispatch();
@@ -12,6 +13,12 @@ const ProductItem = (props) => {
   const { title, price, description, id } = props;
   const addToCartHandler = async () => {
     let quantity = 1;
+    
+    dispatch(uiActions.uiNotification({
+      status: 'pending',
+      message: 'Get Request',
+      isNotify:true
+    }));
     try {
       const response = await fetch("http://127.0.0.1:8000/api/add-to-cart", {
         method: "POST",
@@ -32,6 +39,12 @@ const ProductItem = (props) => {
         dispatch(cartActions.addItemToCart({
           ...props
         }))
+        
+        dispatch(uiActions.uiNotification({
+          status: 'success',
+          message: 'Add To Cart',
+          isNotify:true
+        }));
       }
     
       // setIsLoading(false);
@@ -39,10 +52,20 @@ const ProductItem = (props) => {
     } catch (error) {
       // setError(error.message);
       // Code to handle the error
+      dispatch(uiActions.uiNotification({
+        status: 'error',
+        message: 'Something is wrong!!',
+        isNotify:true
+      }));
       console.log("An error occurred:", error.message);
     } finally {
-      // Optional finally block
-      // Code here will always execute regardless of whether an error occurred or not
+      setTimeout(() => {
+        dispatch(uiActions.uiNotification({
+          status: '',
+          message: '',
+          isNotify:false
+        }));
+      },4000)
     }
   
   }

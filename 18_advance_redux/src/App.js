@@ -2,14 +2,26 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import { useEffect, useCallback } from 'react'
+import Notification from './components/UI/notification.js'
 //redux
 import { useDispatch } from 'react-redux'
-import {cartActions} from './store/cart-slice.js'
+import { cartActions } from './store/cart-slice.js'
+import { uiActions } from './store/ui-slice.js'
+
+
 
 function App() {
   const dispatch = useDispatch();
   const fetchDatas = useCallback(async () => {
     try {
+    
+        dispatch(uiActions.uiNotification({
+          status: 'pending',
+          message: 'Fetching Data',
+          isNotify:true
+        }));
+      
+      
       const response = await fetch("http://127.0.0.1:8000/api/get-all-post");
       const cartsResponse = await fetch("http://127.0.0.1:8000/api/fetch-carts");
       // console.log(response);
@@ -19,8 +31,15 @@ function App() {
       const data = await response.json();
       const cartData = await cartsResponse.json();
 
-      console.log('carts', cartData)
       
+        dispatch(uiActions.uiNotification({
+          status: 'success',
+          message: 'Completed...',
+          isNotify:true
+        }));
+    
+      
+
       //fetch post
       data.data.forEach((d) => {
         let randNum = Math.floor(Math.random() * 100) + 1;;
@@ -54,10 +73,21 @@ function App() {
     } catch (error) {
       // setError(error.message);
       // Code to handle the error
-      console.log("An error occurred:", error.message);
+      dispatch(uiActions.uiNotification({
+        status: 'error',
+        message: 'Something is wrong!!',
+        isNotify:true
+      }));
+
+      // console.log("An error occurred:", error.message);
     } finally {
-      // Optional finally block
-      // Code here will always execute regardless of whether an error occurred or not
+      setTimeout(() => {
+        dispatch(uiActions.uiNotification({
+          status: '',
+          message: '',
+          isNotify:false
+        }));
+      },4000)
     }
 
   },[])
@@ -66,10 +96,13 @@ function App() {
     fetchDatas();
   },[fetchDatas]);
   return (
+    <>
+    <Notification />
     <Layout>
       <Cart />
       <Products />
     </Layout>
+    </>
   );
 }
 
