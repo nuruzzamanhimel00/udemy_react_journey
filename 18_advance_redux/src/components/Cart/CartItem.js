@@ -7,17 +7,80 @@ import {cartActions} from '../../store/cart-slice.js'
 const CartItem = (props) => {
   const { name, quantity, totalPrice, price } = props.item;
   const dispatch = useDispatch();
-  const incrementCartHandler = () => {
-    console.log({
-      ...props.item
-    })
-    dispatch(cartActions.addItemToCart({
-      ...props.item,id:props.item.itemId,title:props.item.name
-    }))
+  const incrementCartHandler = async() => {
+
+    let quantity = 1;
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/add-to-cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          post_id: props.item.id,
+          quantity: quantity
+        }),
+      });
+      // console.log(response);
+      if (response.status !== 200) {
+        throw new Error("Something is wrong");
+      }
+      const data = await response.json();
+      if(data.status === 'success') {
+      
+        dispatch(cartActions.addItemToCart({
+          ...props.item,id:props.item.id,title:props.item.name
+        }))
+      }
+    
+      // setIsLoading(false);
+      console.log(data);
+    } catch (error) {
+      // setError(error.message);
+      // Code to handle the error
+      console.log("An error occurred:", error.message);
+    } finally {
+      // Optional finally block
+      // Code here will always execute regardless of whether an error occurred or not
+    }
+    
   }
 
-  const removeCartHandler = () => {
-    dispatch(cartActions.removeItemFromCart(props.item.itemId))
+  const removeCartHandler = async () => {
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/remove-cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          post_id: props.item.id,
+          quantity: 1
+        }),
+      });
+      // console.log(response);
+      if (response.status !== 200) {
+        throw new Error("Something is wrong");
+      }
+      const data = await response.json();
+      if(data.status === 'success') {
+      
+        dispatch(cartActions.removeItemFromCart(props.item.id))
+      }
+    
+      // setIsLoading(false);
+      console.log(data);
+    } catch (error) {
+      // setError(error.message);
+      // Code to handle the error
+      console.log("An error occurred:", error.message);
+    } finally {
+      // Optional finally block
+      // Code here will always execute regardless of whether an error occurred or not
+    }
+
+    // dispatch(cartActions.removeItemFromCart(props.item.itemId))
   }
 
   return (

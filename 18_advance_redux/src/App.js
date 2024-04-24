@@ -11,30 +11,46 @@ function App() {
   const fetchDatas = useCallback(async () => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/get-all-post");
+      const cartsResponse = await fetch("http://127.0.0.1:8000/api/fetch-carts");
       // console.log(response);
-      if (response.status !== 200) {
+      if (response.status !== 200 || cartsResponse.status !== 200) {
         throw new Error("Something is wrong");
       }
       const data = await response.json();
+      const cartData = await cartsResponse.json();
 
+      console.log('carts', cartData)
+      
+      //fetch post
       data.data.forEach((d) => {
-        let randNum = Math.floor(Math.random() * 100) + 1;
+        let randNum = Math.floor(Math.random() * 100) + 1;;
         d.price = randNum;
         d.totalPrice = randNum;
         d.quantity = d.cart != null ? d.cart.quantity : 0
         // console.log(d);
       });
-      // console.log("fetch all moviews", data.data);
+
+      let products = [...data.data]
       let totalQuantity = 0;
-      data.data.forEach((d) => {
-        totalQuantity += d.quantity
+      
+      //fetch cart
+      cartData.data.forEach((d) => {
+        let findData = data.data.find((item) => item.id === d.id)
+        if (findData) {
+          d.name = d.post !== null ? d.post.title: 'no title';
+          d.price= findData.price
+          d.totalPrice = findData.price * d.quantity;
+          totalQuantity += d.quantity
+        }
       })
+
+      
       dispatch(cartActions.replaceCart({
-        items: [...data.data],
-        totalQuantity:totalQuantity
+        items: [...cartData.data],
+        totalQuantity: totalQuantity,
+        products:products
       }))
-      // setIsLoading(false);
-      // console.log(data);
+  
     } catch (error) {
       // setError(error.message);
       // Code to handle the error

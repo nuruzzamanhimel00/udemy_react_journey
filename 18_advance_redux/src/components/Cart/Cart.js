@@ -8,6 +8,8 @@ const Cart = (props) => {
   const isVisiabled = useSelector(state => state.ui.isVisiabled)
   const cartItems = useSelector(state => state.cart.items)
 
+  // console.log('cartItems',cartItems)
+
   let allCartItems = cartItems.map(item => (
     <CartItem
       key={item.id}

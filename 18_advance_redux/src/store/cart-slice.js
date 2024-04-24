@@ -16,15 +16,16 @@ const totalCartQtySum = (state) => {
 
 const cartReducer = {
     replaceCart(state, action) {
-        state.products = action.payload.items
-        state.totalQuantity = action.payload.totalQuantity
+        state.products = action.payload.products ?action.payload.products : state.products
+        state.totalQuantity = action.payload.totalQuantity ? action.payload.totalQuantity : state.totalQuantity
+        state.items = action.payload.items ? action.payload.items : state.items
     },
     addItemToCart(state, action) {
         let payload = action.payload
-        let existingItem = state.items.find(item => item.itemId === payload.id)
+        let existingItem = state.items.find(item => item.id === payload.id)
         if (!existingItem) {
             state.items.push({
-                itemId: payload.id,
+                id: payload.id,
                 price: parseFloat(payload.price),
                 quantity: 1,
                 totalPrice: parseFloat(payload.price),
@@ -40,9 +41,9 @@ const cartReducer = {
     },
     removeItemFromCart(state, action) {
         let id = action.payload
-        let find = state.items.find(item => item.itemId === id)
+        let find = state.items.find(item => item.id === id)
         if (find.quantity === 1) {
-            state.items = state.items.filter(item => item.itemId !== id)
+            state.items = state.items.filter(item => item.id !== id)
         } else {
             find.quantity--
             find.totalPrice = find.price * find.quantity
