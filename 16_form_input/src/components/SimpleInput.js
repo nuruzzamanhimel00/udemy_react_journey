@@ -1,28 +1,32 @@
-import React, {useState} from 'react'
-
+import React from 'react'
+import useInput from   '../hook/user-input';
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState('');
-  const [nameIsValidate, setNameIsValidate]= useState(true)
 
-  const enterNameChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-    if (event.target.value.trim().length === 0) {
-      setNameIsValidate(false);
-      return; 
-    }
-    setNameIsValidate(true);
-    
-  }
+  const { value: enteredName,  setIsTuch,  enterNameIsValied, enterNameInputHandler, enterNameBlurHandlr, formIsValide, reset: resetValue } = useInput(value => value.trim() === '');
+
+  const { value: enteredEmail,  setIsTuch:setIsEmailTuch,  enterNameIsValied:enterEmailIsValied, enterNameInputHandler: enterEmailInputHandler, enterNameBlurHandlr: enterEmailBlurHandlr, formIsValide:formIsEmailValide, reset: resetEmailValue } = useInput(value => value.trim() === '' || !value.includes('@'));
+
+  
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (enteredName.trim().length === 0) {
-      setNameIsValidate(false);
+    
+    if (enteredName === '') {
+      console.log('if')
+
+      setIsTuch(true)
       return; 
     }
-    setNameIsValidate(true);
-    setEnteredName('');
-    console.log(enteredName);
+    if (enteredEmail === '' || !enteredEmail.includes('@')) {
+      console.log('if enteredEmail')
+      setIsEmailTuch(true)
+      return;
+    }
+    resetValue();
+    resetEmailValue();
+    // setEnteredNameIsTuch(false)
+    // setEnteredName('');
+  
   }
   return (
     <form onSubmit={submitHandler}>
@@ -30,21 +34,41 @@ const SimpleInput = (props) => {
         <label htmlFor='name'
           style={ 
             {
-              color: nameIsValidate ? 'green' : 'red'
+              color: !enterNameIsValied ? 'green' : 'red'
           }
         }
         >Your Name</label>
         <input type='text' id='name' value={enteredName}
-      
-          onChange={enterNameChangeHandler} style={
+          onBlur={enterNameBlurHandlr}
+          onInput={enterNameInputHandler} style={
           {
-            border: nameIsValidate ? '1px solid green' : '1px solid red'
+            border: !enterNameIsValied ? '1px solid green' : '1px solid red'
           }
         } />
-        {!nameIsValidate && <p style={{color: 'red'}} >Name field cannot be empty</p> }
+        {enterNameIsValied && <p style={{color: 'red'}} >Name field cannot be empty</p> }
+      </div>
+
+      <div className='form-control'>
+        <label htmlFor='email'
+          style={ 
+            {
+              color: !enterEmailIsValied ? 'green' : 'red'
+          }
+        }
+        >Your Email</label>
+        <input type='email' id='email' value={enteredEmail}
+          onBlur={enterEmailBlurHandlr}
+          onInput={enterEmailInputHandler} style={
+          {
+            border: !enterEmailIsValied ? '1px solid green' : '1px solid red'
+          }
+        } />
+        {enterEmailIsValied && <p style={{color: 'red'}} >Email field validation fail</p> }
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={enterEmailIsValied}
+        className={enterEmailIsValied ? 'disable-btn' : ''}
+        >Submit</button>
       </div>
     </form>
   );
