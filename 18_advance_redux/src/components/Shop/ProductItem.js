@@ -4,13 +4,40 @@ import classes from './ProductItem.module.css';
 import { useDispatch } from 'react-redux'
 import { cartActions } from '../../store/cart-slice.js'
 import { uiActions } from '../../store/ui-slice.js'
+//custom hook
+import useHttp from '../../hook/user-http.js'
 
 const ProductItem = (props) => {
   const dispatch = useDispatch();
+  //custom hook
+  const { makeRequest: addToCartRquest} = useHttp();
 
+  const { title, price, description, itemId } = props;
+  
+  const applyData = async (response) => {
+    if (response.status !== 200) {
+      dispatch(uiActions.uiNotification({
+        status: 'error',
+        message: 'Something is wrong!!',
+        isNotify:true
+      }));
+      return;
+    }
+    const data = await response.json();
+    console.log('data',data)
+    if(data.status === 'success') {
+      dispatch(cartActions.addItemToCart({
+        ...props
+      }))
+      
+      dispatch(uiActions.uiNotification({
+        status: 'success',
+        message: 'Add To Cart',
+        isNotify:true
+      }));
+    }
 
-
-  const { title, price, description, id , itemId} = props;
+  }
   const addToCartHandler = async () => {
     let quantity = 1;
     
@@ -19,55 +46,18 @@ const ProductItem = (props) => {
       message: 'Get Request',
       isNotify:true
     }));
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/add-to-cart", {
+   addToCartRquest({
+        url: "http://127.0.0.1:8000/api/add-to-cart",
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
+        body: {
           post_id: itemId,
           quantity: quantity
-        }),
-      });
-      // console.log(response);
-      if (response.status !== 200) {
-        throw new Error("Something is wrong");
-      }
-      const data = await response.json();
-      if(data.status === 'success') {
-        dispatch(cartActions.addItemToCart({
-          ...props
-        }))
-        
-        dispatch(uiActions.uiNotification({
-          status: 'success',
-          message: 'Add To Cart',
-          isNotify:true
-        }));
-      }
-    
-      // setIsLoading(false);
-      console.log(data);
-    } catch (error) {
-      // setError(error.message);
-      // Code to handle the error
-      dispatch(uiActions.uiNotification({
-        status: 'error',
-        message: 'Something is wrong!!',
-        isNotify:true
-      }));
-      console.log("An error occurred:", error.message);
-    } finally {
-      setTimeout(() => {
-        dispatch(uiActions.uiNotification({
-          status: '',
-          message: '',
-          isNotify:false
-        }));
-      },4000)
-    }
-  
+        },
+      }, applyData)
+
   }
   return (
     <li className={classes.item}>
