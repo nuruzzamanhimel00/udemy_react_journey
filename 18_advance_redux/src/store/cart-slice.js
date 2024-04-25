@@ -25,7 +25,7 @@ const cartReducer = {
         let existingItem = state.items.find(item => item.id === payload.id)
         if (!existingItem) {
             state.items.push({
-                id: payload.id,
+                itemId: payload.id,
                 price: parseFloat(payload.price),
                 quantity: 1,
                 totalPrice: parseFloat(payload.price),

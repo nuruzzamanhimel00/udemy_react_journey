@@ -10,7 +10,7 @@ const ProductItem = (props) => {
 
 
 
-  const { title, price, description, id, post_id } = props;
+  const { title, price, description, id , itemId} = props;
   const addToCartHandler = async () => {
     let quantity = 1;
     
@@ -26,7 +26,7 @@ const ProductItem = (props) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          post_id: id,
+          post_id: itemId,
           quantity: quantity
         }),
       });

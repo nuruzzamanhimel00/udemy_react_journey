@@ -42,10 +42,13 @@ function App() {
 
       //fetch post
       data.data.forEach((d) => {
-        let randNum = Math.floor(Math.random() * 100) + 1;;
+        let randNum = Math.floor(Math.random() * 100) + 1;
+        d.itemId = d.id;
         d.price = randNum;
-        d.totalPrice = randNum;
         d.quantity = d.cart != null ? d.cart.quantity : 0
+        d.totalPrice = randNum;
+        d.name = d.title
+        
         // console.log(d);
       });
 
@@ -56,6 +59,7 @@ function App() {
       cartData.data.forEach((d) => {
         let findData = data.data.find((item) => item.id === d.id)
         if (findData) {
+          d.itemId = d.post !== null ? d.post.id: null
           d.name = d.post !== null ? d.post.title: 'no title';
           d.price= findData.price
           d.totalPrice = findData.price * d.quantity;
