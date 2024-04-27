@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense, lazy} from 'react'
+import { Switch, Route } from 'react-router-dom';
+
+import Layout from './components/Layout/Layout';
+// import UserProfile from './components/Profile/UserProfile';
+// import AuthPage from './pages/AuthPage';
+// import HomePage from './pages/HomePage';
+import Spinner from './components/Spinner.js'
 
 function App() {
+
+  const HomePage = lazy(() => delayForDemo(import('./pages/HomePage')));
+  const AuthPage = lazy(() => delayForDemo(import('./pages/AuthPage')));
+  const UserProfile = lazy(() => delayForDemo(import('./components/Profile/UserProfile')));
+  const delayForDemo = (promise) => {
+    return new Promise(resolve => {
+      setTimeout(resolve, 500);
+    }).then(() => promise);
+  }
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Suspense fallback={<Spinner />}>
+        <Switch>
+          <Route path='/' exact>
+            <HomePage />
+          </Route>
+          <Route path='/auth'>
+            <AuthPage />
+          </Route>
+          <Route path='/profile'>
+            <UserProfile />
+          </Route>
+        </Switch>
+      </Suspense>
+    
+    </Layout>
   );
 }
 
