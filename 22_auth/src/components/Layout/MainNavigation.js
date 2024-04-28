@@ -36,9 +36,9 @@ const MainNavigation = () => {
     
   }).then((data) => {
       authCtx.logout()
-      localStorage.removeItem('token')
+      
       history.push('/')
-      console.log('datga', data)
+      // console.log('datga', data)
   });
   }
   return (

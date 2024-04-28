@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 
 const AuthContext = React.createContext({
     token: '',
@@ -7,10 +7,11 @@ const AuthContext = React.createContext({
     logout:() =>{}
 });
 
-const calculateReminTime = (expirationTime) => {
+const calculateReminIngTime = (expirationTime) => {
     const currentTime = new Date().getTime();
     const adjExpirationTime = new Date(expirationTime).getTime();
     const remianingTime = adjExpirationTime - currentTime
+    console.log(remianingTime, currentTime, adjExpirationTime)
     return remianingTime
 }
 
@@ -20,20 +21,23 @@ export const AuthContextProvider = (props) => {
     const [token, setToken] = useState(localStorage.getItem('token'))
     
     const isLoggedIn = token ? true : false
-    const login = (token, expireTime) => {
+    const loginHandler = (token, expireTime) => {
         setToken(token)
-        const reminingTime = calculateReminTime(expireTime)
-        setTimeout(logout, reminingTime)
+        localStorage.setItem('token', token)
+
+        const reminingTime = calculateReminIngTime(expireTime)
+        setTimeout(logoutHandler, reminingTime)
     }
-    const logout = () => {
+    const logoutHandler = () => {
         setToken(null)
+        localStorage.removeItem('token')
     }
 
     const initaialValue = {
         token: token,
         isLoggedIn: isLoggedIn,
-        login: login,
-        logout: logout
+        login: loginHandler,
+        logout: logoutHandler
     }
     return (
         <>

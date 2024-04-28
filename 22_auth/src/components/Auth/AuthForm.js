@@ -65,7 +65,11 @@ const AuthForm = () => {
       
     }).then((data) => {
       if (isLogin && data !== undefined) {
-        authCtx.login(data.access_token)
+    
+        let time = new Date().getTime() + ((+data.lifetime * 60) * 1000)
+        let expireTime = new Date(time)
+        // console.log('time', new Date().getTime(), expireTime.toISOString())
+        authCtx.login(data.access_token,  expireTime.toISOString())
         localStorage.setItem('token', data.access_token)
         history.push('/')
       } 
