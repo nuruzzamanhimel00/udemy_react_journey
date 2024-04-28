@@ -3,8 +3,8 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 
 
 const Spinner = () => {
-    let [color, setColor] = useState("#ffffff");
-    let [loading, setLoading] = useState(true);
+    let [color] = useState("#ffffff");
+    let [loading] = useState(true);
     return (
         <>
             <PacmanLoader
