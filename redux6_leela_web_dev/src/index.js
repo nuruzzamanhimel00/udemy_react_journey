@@ -5,7 +5,9 @@ import reportWebVitals from './reportWebVitals';
 //routes
 import Root, {loader as rootLoader,  action as rootAction} from './routes/Root.js'
 import ErrorPage from './routes/ErrorPage.js'
-import Contact from './routes/Contact.js'
+import Contact, { loader as contactLoader } from './routes/Contact.js'
+//edit componet
+import EditContact,{action as editContact } from './routes/EditContact.js'
 
 import {
   createBrowserRouter,
@@ -25,6 +27,13 @@ const router = createBrowserRouter([
         path: "/contacts/:contactId",
         element: <Contact />,
         errorElement: <ErrorPage />,
+        loader: contactLoader
+      },
+      {
+        path: "contacts/:contactId/edit",
+        element: <EditContact />,
+        loader: contactLoader,
+        action: editContact,
       },
     ]
   },
