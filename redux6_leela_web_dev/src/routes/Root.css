@@ -13,3 +13,11 @@
     float: right;
     height: 100vh;
 }
+a.active{
+    background: #ddd;
+    color: #000;
+}
+a.pending{
+    background: #b9e90e;
+    color: #000;
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Root.css'
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import { Outlet, useLoaderData, Form, NavLink } from "react-router-dom";
 
 import { getContacts, createContact } from '../routes/contacts'
 
@@ -52,9 +52,13 @@ export default function Root() {
                   {
                     contacts.map((contact) =>
                       <li key={contact.id}>
-                          <Link  to={`/contacts/${contact.id}`}>
+                        <NavLink to={`/contacts/${contact.id}`}
+                        className={({ isActive, isPending }) =>
+                          isPending ? "pending" : isActive ? "active" : ""
+                        }
+                        >
                             {contact.first} {contact.last}
-                        </Link>
+                        </NavLink>
                       </li>
                     )
                   }
