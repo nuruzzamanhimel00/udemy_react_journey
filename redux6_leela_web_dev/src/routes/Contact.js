@@ -8,6 +8,10 @@ export async function loader({params}) {
   // return { contact };
 }
 
+export const action = (data) => {
+  console.log(data);
+}
+
 export default function Contact() {
   const contactDetails= useLoaderData();
 
@@ -20,6 +24,14 @@ export default function Contact() {
     favorite: true,
     ...contactDetails
   };
+
+  const deleteHandler = (event) => {
+    
+    // var result = confirm("Want to delete?");
+    // if (!result) {
+    //   event.preventDefault();
+    // }
+  }
 
   return (
     <div id="contact">
@@ -56,9 +68,7 @@ export default function Contact() {
           </Form>
           <Form
             method="post"
-            action="destroy"
-            
-          >
+            action="destroy" onSubmit={deleteHandler}>
             <button type="submit">Delete</button>
           </Form>
         </div>

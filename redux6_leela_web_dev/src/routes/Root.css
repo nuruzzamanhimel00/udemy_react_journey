@@ -21,3 +21,7 @@ a.pending{
     background: #b9e90e;
     color: #000;
 }
+#detail.loading{
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}

@@ -45,3 +45,14 @@ export const updateContact = async (contactId, updates) => {
     localStorage.setItem('contacts', JSON.stringify(contacts))
     return contact;
 }
+
+export const deleteContact = async (contactId) => {
+    await fakeNetwork();
+    let contacts = await getContacts();
+    let contact = contacts.find((ct) => ct.id === contactId)
+    // console.log('uldate contact',contact)
+    if (!contact) throw new Error('Somethis is worng!'); 
+    contacts = contacts.filter((cnt) => cnt.id !== contactId)
+    localStorage.setItem('contacts', JSON.stringify(contacts))
+    return contacts;
+}

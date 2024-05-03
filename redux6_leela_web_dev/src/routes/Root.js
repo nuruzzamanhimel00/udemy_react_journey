@@ -1,6 +1,6 @@
 import React from 'react'
 import './Root.css'
-import { Outlet, useLoaderData, Form, NavLink } from "react-router-dom";
+import { Outlet, useLoaderData, Form, NavLink, redirect, useNavigation } from "react-router-dom";
 
 import { getContacts, createContact } from '../routes/contacts'
 
@@ -12,11 +12,14 @@ export const loader = async () => {
 export async function action() {
   const contact = await createContact();
   // console.log('root action')
-  return contact;
+  return redirect(`/contacts/${contact.id}/edit`);
+  // return contact;
 }
 export default function Root() {
   const contacts= useLoaderData();
-  // console.log('root function',contacts)
+
+  const navigation = useNavigation();
+  // console.log('root function',navigation)
 
     return (
       <>
@@ -71,7 +74,12 @@ export default function Root() {
           
           </nav>
         </div>
-        <div id="detail">
+        <div id="detail"
+        className={
+          navigation.state === "loading" ? "loading" : ""
+        }
+
+        >
       
                 <Outlet />
             </div>
