@@ -27,9 +27,9 @@ export default function Contact() {
 
   const deleteHandler = (event) => {
   
-    if (!confirm("Want to delete?")) {
-      event.preventDefault();
-    }
+    // if (!confirm("Want to delete?")) {
+    //   event.preventDefault();
+    // }
   }
 
   return (

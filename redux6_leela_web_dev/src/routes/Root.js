@@ -1,38 +1,54 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './Root.css'
 import { Outlet, useLoaderData, Form, NavLink, redirect, useNavigation } from "react-router-dom";
 
 import { getContacts, createContact } from '../routes/contacts'
 
-export const loader = async () => {
-  let contacts = await getContacts()
-  // console.log('root loader ')
-  return contacts
+export const loader = async ({request}) => {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  // console.log('root action',request, q)
+  let contacts = await getContacts(q)
+  // console.log('root loader ', request, q)
+  return {
+    contacts, q
+  }
 }
 export async function action() {
   const contact = await createContact();
-  // console.log('root action')
+
   return redirect(`/contacts/${contact.id}/edit`);
   // return contact;
 }
 export default function Root() {
-  const contacts= useLoaderData();
+  const { contacts, q } = useLoaderData();
 
   const navigation = useNavigation();
-  // console.log('root function',navigation)
+  const [query, setQuery] = useState(false)
+
+  useEffect(() => {
+    setQuery(q)
+  }, [q])
+  
+  const changeHandler = (event) => {
+
+    setQuery(event.target.value)
+  }
 
     return (
       <>
         <div id="sidebar">
           <h1>React Router Contacts</h1>
           <div>
-            <form id="search-form" role="search">
+            <Form  id="search-form" role="search">
               <input
                 id="q"
                 aria-label="Search contacts"
                 placeholder="Search"
                 type="search"
                 name="q"
+                value={query}
+                onChange={changeHandler}
               />
               <div
                 id="search-spinner"
@@ -43,7 +59,7 @@ export default function Root() {
                 className="sr-only"
                 aria-live="polite"
               ></div>
-            </form>
+            </Form>
             <Form method="post">
               <button type="submit">New</button>
             </Form>
