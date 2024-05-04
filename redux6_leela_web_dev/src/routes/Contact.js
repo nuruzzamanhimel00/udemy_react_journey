@@ -26,11 +26,10 @@ export default function Contact() {
   };
 
   const deleteHandler = (event) => {
-    
-    // var result = confirm("Want to delete?");
-    // if (!result) {
-    //   event.preventDefault();
-    // }
+  
+    if (!confirm("Want to delete?")) {
+      event.preventDefault();
+    }
   }
 
   return (
