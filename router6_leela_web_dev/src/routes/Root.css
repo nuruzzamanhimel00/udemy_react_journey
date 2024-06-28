@@ -1,0 +1,27 @@
+#sidebar{
+    width: 30%;
+    background: red;
+    height: 100vh;
+    float: left;
+}
+#sidebar>div{
+    display: flex;
+}
+#detail{
+    width: 70%;
+    background: green;
+    float: right;
+    height: 100vh;
+}
+a.active{
+    background: #ddd;
+    color: #000;
+}
+a.pending{
+    background: #b9e90e;
+    color: #000;
+}
+#detail.loading{
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
